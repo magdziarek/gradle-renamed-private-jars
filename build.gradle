@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+allprojects {
+    repositories {
+        maven {
+            url project.properties['nexusUrl']
+            credentials {
+                username project.properties['nexusUsername']
+                password project.properties['nexusPassword']
+            }
+            // add metadatasources to be able to use jar files
+            metadataSources {
+                artifact()
+            }
+        }
+        // add the below to make sure all deps are coming from the private repo
+        // mavenCentral {
+        //     content {
+        //         excludeGroupByRegex '.*' 
+        //     }
+        // }
+    }
+}  
+
+dependencies {
+    implementation 'myGroup:myHttpClient:4.5.13@jar'
+    implementation 'testGroup:my-springbeans-jar:1.0.0@jar'
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.0'
+}
